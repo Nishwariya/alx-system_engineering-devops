@@ -33,21 +33,20 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-# start of parameters for Jake186.tech
-frontend Jake186.tech-http-frontend
+# start of parameters for ruthmarcuss.tech
+frontend ruthmarcuss.tech-http-frontend
 	bind	 *:80
-	http-request set-header X-Forwarded-Proto http
-	default_backend	 Jake186.tech-backend
+	option forwardfor
+	default_backend	 nginx_webservers
 
 
-frontend  Jake186.tech-https-frontend
-	bind *:443 ssl crt /etc/ssl/Jake186.tech.pem
-	http-request set-header X-Forwarded-Proto https
-        default_backend Jake186.tech-backend
+frontend  ruthmarcuss.tech-https-frontend
+	bind *:443 ssl crt /etc/letsencrypt/live/www.ruthmarcuss.tech.tech/fullchain.pem
+        default_backend nginx_webservers
 
 
-backend Jake186.tech-backend
+backend nginx_webservers
         balance roundrobin
-        server 914-web-01 34.138.32.248:80 check
-        server 914-web-02 3.226.74.205:80 check
+        server 61590-web-01 18.204.7.186:80 check
+        server 61590-web-02 3.83.245.14:80 check
 # end of parameters
